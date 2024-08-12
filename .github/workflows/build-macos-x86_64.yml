@@ -42,7 +42,7 @@ env:
 jobs:
   build:
     name: build ${{ inputs.version }} on macOS x86_64
-    runs-on: macos-13
+    runs-on: macos-11
     steps:
       - uses: actions/checkout@v4
 
