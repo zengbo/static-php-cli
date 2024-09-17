@@ -143,6 +143,7 @@ including php-src and the source code of various dependent libraries.
 bin/spc download --all
 
 # Download all dependent packages, and specify the main version of PHP to download, optional: 7.3, 7.4, 8.0, 8.1, 8.2, 8.3
+# Also supports specific version of php release: 8.3.10, 8.2.22, etc.
 bin/spc download --all --with-php=8.2
 
 # Show download progress bar while downloading (curl)
@@ -170,7 +171,7 @@ bin/spc download  --for-libs=liblz4,libevent --for-extensions=pcntl,rar,xml
 bin/spc download --for-libs=liblz4,libevent --without-suggestions
 
 # When downloading sources, ignore some source caches (always force download, e.g. switching PHP version)
-bin/spc download --for-extensions=curl,pcntl,xml --ignore-cache-sources=php-src --with-php=8.3
+bin/spc download --for-extensions=curl,pcntl,xml --ignore-cache-sources=php-src --with-php=8.3.10
 
 # Set retry times (default is 0)
 bin/spc download --all --retry=2
@@ -201,6 +202,19 @@ bin/spc download --all -U "php-src:https://downloads.php.net/~eric/php-8.3.0beta
 
 # Specifying to download an older version of the curl library
 bin/spc download --all -U "curl:https://curl.se/download/curl-7.88.1.tar.gz"
+```
+
+If the source you download is not a link, but a git repository, you can use `-G` or `--custom-git` to rewrite the download link,
+so that the downloader can force the use of the specified git repository to download packages from this source.
+The usage method is `{source-name}:{branch}:{url}`, which can rewrite the download link of multiple libraries at the same time. 
+It is also available when downloading with the `--for-extensions` option.
+
+```bash
+# Specifying to download the source code of the PHP extension from the specified branch of the git repository
+bin/spc download --for-extensions=redis -G "php-src:master:https://github.com/php/php-src.git"
+
+# Download the latest code from the master branch of the swoole-src repository instead of PECL release version
+bin/spc download --for-extensions=swoole -G "swoole:master:https://github.com/swoole/swoole-src.git"
 ```
 
 ## Command - doctor
