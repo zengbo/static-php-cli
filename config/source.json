@@ -102,6 +102,18 @@
             "path": "LICENSE"
         }
     },
+    "ext-imap": {
+        "type": "url",
+        "url": "https://pecl.php.net/get/imap",
+        "path": "php-src/ext/imap",
+        "filename": "imap.tgz",
+        "license": {
+            "type": "file",
+            "path": [
+                "LICENSE"
+            ]
+        }
+    },
     "ext-memcache": {
         "type": "url",
         "url": "https://pecl.php.net/get/memcache",
@@ -523,7 +535,7 @@
     "micro": {
         "type": "git",
         "path": "php-src/sapi/micro",
-        "rev": "master",
+        "rev": "84beta",
         "url": "https://github.com/static-php/phpmicro",
         "license": {
             "type": "file",
@@ -736,13 +748,18 @@
         }
     },
     "swoole": {
-        "type": "ghtar",
         "path": "php-src/ext/swoole",
-        "repo": "swoole/swoole-src",
-        "prefer-stable": true,
+        "type": "git",
+        "rev": "master",
+        "url": "https://github.com/swoole/swoole-src.git",
         "license": {
             "type": "file",
             "path": "LICENSE"
+        },
+        "alt": {
+            "type": "ghtar",
+            "repo": "swoole/swoole-src",
+            "prefer-stable": true
         }
     },
     "swow": {
