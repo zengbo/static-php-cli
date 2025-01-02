@@ -128,6 +128,15 @@
             "path": "LICENSE"
         }
     },
+    "ext-rdkafka": {
+        "type": "ghtar",
+        "repo": "arnaud-lb/php-rdkafka",
+        "path": "php-src/ext/rdkafka",
+        "license": {
+            "type": "file",
+            "path": "LICENSE"
+        }
+    },
     "ext-simdjson": {
         "type": "url",
         "url": "https://pecl.php.net/get/simdjson",
@@ -294,6 +303,16 @@
             "path": "LICENSE"
         }
     },
+    "libaom": {
+        "type": "git",
+        "rev": "main",
+        "url": "https://aomedia.googlesource.com/aom",
+        "provide-pre-built": true,
+        "license": {
+            "type": "file",
+            "path": "LICENSE"
+        }
+    },
     "libargon2": {
         "type": "git",
         "rev": "master",
@@ -329,6 +348,17 @@
             "path": "LICENSE.md"
         }
     },
+    "libde265": {
+        "type": "ghrel",
+        "repo": "strukturag/libde265",
+        "match": "libde265-.+\\.tar\\.gz",
+        "prefer-stable": true,
+        "provide-pre-built": true,
+        "license": {
+            "type": "file",
+            "path": "COPYING"
+        }
+    },
     "libevent": {
         "type": "ghrel",
         "repo": "libevent/libevent",
@@ -357,6 +387,17 @@
         "license": {
             "type": "file",
             "path": "LICENSE"
+        }
+    },
+    "libheif": {
+        "type": "ghrel",
+        "repo": "strukturag/libheif",
+        "match": "libheif-.+\\.tar\\.gz",
+        "prefer-stable": true,
+        "provide-pre-built": true,
+        "license": {
+            "type": "file",
+            "path": "COPYING"
         }
     },
     "libiconv": {
@@ -420,6 +461,14 @@
         "type": "git",
         "url": "https://github.com/alanxz/rabbitmq-c.git",
         "rev": "master",
+        "license": {
+            "type": "file",
+            "path": "LICENSE"
+        }
+    },
+    "librdkafka": {
+        "type": "ghtar",
+        "repo": "confluentinc/librdkafka",
         "license": {
             "type": "file",
             "path": "LICENSE"
@@ -734,7 +783,7 @@
     },
     "sqlite": {
         "type": "url",
-        "url": "https://www.sqlite.org/2023/sqlite-autoconf-3430200.tar.gz",
+        "url": "https://www.sqlite.org/2024/sqlite-autoconf-3450200.tar.gz",
         "provide-pre-built": true,
         "license": {
             "type": "text",

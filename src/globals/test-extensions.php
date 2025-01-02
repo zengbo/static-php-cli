@@ -22,11 +22,12 @@ $test_php_version = [
 // test os (macos-13, macos-14, ubuntu-latest, windows-latest are available)
 $test_os = [
     'macos-14',
+    // 'macos-13',
     'ubuntu-latest',
 ];
 
 // whether enable thread safe
-$zts = true;
+$zts = false;
 
 $no_strip = false;
 
@@ -38,8 +39,8 @@ $prefer_pre_built = false;
 
 // If you want to test your added extensions and libs, add below (comma separated, example `bcmath,openssl`).
 $extensions = match (PHP_OS_FAMILY) {
-    'Linux', 'Darwin' => 'parallel',
-    'Windows' => 'amqp,apcu,bcmath,bz2,calendar,ctype,curl,dba,dom,ds,exif,ffi,fileinfo,filter,ftp,gd,iconv,igbinary,libxml,mbregex,mbstring,mysqli,mysqlnd,opcache,openssl,pdo,pdo_mysql,pdo_sqlite,pdo_sqlsrv,phar,rar,redis,session,shmop,simdjson,simplexml,soap,sockets,sqlite3,sqlsrv,ssh2,swow,sysvshm,tokenizer,xml,xmlreader,xmlwriter,yac,yaml,zip,zlib',
+    'Linux', 'Darwin' => 'openssl',
+    'Windows' => 'openssl',
 };
 
 // If you want to test lib-suggests feature with extension, add them below (comma separated, example `libwebp,libavif`).
@@ -114,14 +115,13 @@ if ($argv[1] === 'download_cmd') {
 }
 
 // generate build command
-if ($argv[1] === 'build_cmd') {
+if ($argv[1] === 'build_cmd' || $argv[1] === 'build_embed_cmd') {
     $build_cmd = 'build ';
     $build_cmd .= quote2($final_extensions) . ' ';
     $build_cmd .= $zts ? '--enable-zts ' : '';
     $build_cmd .= $no_strip ? '--no-strip ' : '';
     $build_cmd .= $upx ? '--with-upx-pack ' : '';
     $build_cmd .= $final_libs === '' ? '' : ('--with-libs=' . quote2($final_libs) . ' ');
-    $build_cmd .= '--build-cli --build-micro ';
     $build_cmd .= str_starts_with($argv[2], 'windows-') ? '' : '--build-fpm ';
     $build_cmd .= '--debug ';
 }
@@ -139,6 +139,7 @@ echo match ($argv[1]) {
     'prefer_pre_built' => $prefer_pre_built ? '--prefer-pre-built' : '',
     'download_cmd' => $down_cmd,
     'build_cmd' => $build_cmd,
+    'build_embed_cmd' => $build_cmd,
     default => '',
 };
 
@@ -150,9 +151,16 @@ if ($argv[1] === 'download_cmd') {
     }
 } elseif ($argv[1] === 'build_cmd') {
     if (str_starts_with($argv[2], 'windows-')) {
-        passthru('powershell.exe -file .\bin\spc.ps1 ' . $build_cmd, $retcode);
+        passthru('powershell.exe -file .\bin\spc.ps1 ' . $build_cmd . ' --build-cli --build-micro', $retcode);
     } else {
-        passthru('./bin/spc ' . $build_cmd, $retcode);
+        passthru('./bin/spc ' . $build_cmd . ' --build-cli --build-micro', $retcode);
+    }
+} elseif ($argv[1] === 'build_embed_cmd') {
+    if (str_starts_with($argv[2], 'windows-')) {
+        // windows does not accept embed SAPI
+        passthru('powershell.exe -file .\bin\spc.ps1 ' . $build_cmd . ' --build-cli', $retcode);
+    } else {
+        passthru('./bin/spc ' . $build_cmd . ' --build-embed', $retcode);
     }
 }
 

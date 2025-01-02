@@ -560,6 +560,19 @@
         "source": "rar",
         "cpp-extension": true
     },
+    "rdkafka": {
+        "support": {
+            "BSD": "wip",
+            "Windows": "wip"
+        },
+        "type": "external",
+        "source": "ext-rdkafka",
+        "arg-type": "custom",
+        "cpp-extension": true,
+        "lib-depends": [
+            "librdkafka"
+        ]
+    },
     "readline": {
         "support": {
             "Windows": "wip",
